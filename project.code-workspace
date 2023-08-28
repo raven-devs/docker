@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "name": "documentation",
+      "path": "./doc"
+    },
+    {
+      "path": "./bin"
+    },
+    {
+      "path": "./src"
+    },
+    {
+      "name": "root",
+      "path": "."
+    }
+  ],
+  "settings": {}
+}

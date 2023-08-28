@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Node.js",
+      "type": "node",
+      "request": "launch",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "envFile": "${workspaceFolder}/.env",
+      "smartStep": true,
+      "runtimeArgs": ["-r", "ts-node/register", "--preserve-symlinks", "--preserve-symlinks-main"],
+      "program": "${workspaceFolder}/src/feature2.ts",
+      "preLaunchTask": "tsc: build - tsconfig.build.json",
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "skipFiles": ["${workspaceFolder}/node_modules/**/*.js"]
+    },
+    {
+      "name": "Express.js",
+      "type": "node",
+      "request": "launch",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "envFile": "${workspaceFolder}/.env",
+      "smartStep": true,
+      "runtimeArgs": ["-r", "ts-node/register", "--preserve-symlinks", "--preserve-symlinks-main"],
+      "program": "${workspaceFolder}/src/express-app.ts",
+      "preLaunchTask": "pre-expressjs-debug",
+      "postDebugTask": "post-expressjs-debug",
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "skipFiles": ["${workspaceFolder}/node_modules/**/*.js"]
+    }
+  ]
+}
