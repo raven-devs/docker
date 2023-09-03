@@ -1,7 +1,5 @@
 # Docker
 
-## Getting started
-
 <https://learn.microsoft.com/en-us/visualstudio/docker/tutorials/docker-tutorial>
 
 ```bash

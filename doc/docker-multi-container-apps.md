@@ -1,6 +1,4 @@
-# Multi-container apps
-
-## Getting started
+# Docker: Multi-container apps
 
 <https://learn.microsoft.com/en-us/visualstudio/docker/tutorials/docker-tutorial>
 
@@ -65,7 +63,7 @@ docker exec --interactive --tty 8b100ba4521a mysql -p
 ### 5. In the dabase shell, list the databases and verify you see the `todos` database
 
 ```SQL
-SHOW DATABASES;
+show databases;
 ```
 
 ### 6. Return to the terminal command prompt
