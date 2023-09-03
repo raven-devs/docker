@@ -5,7 +5,7 @@
 <https://learn.microsoft.com/en-us/visualstudio/docker/tutorials/docker-tutorial>
 
 ```bash
-docker run -d -p 80:80 docker/getting-started
+docker container run -d -p 80:80 docker/getting-started
 ```
 
 ## Log in to a Docker registry or cloud backend
@@ -23,7 +23,7 @@ docker login --username spetushkou
 Prerequisites: Dockerfile file.
 
 ```bash
-docker build --tag $image_name:$tag_name .
+docker build --tag $image_name .
 
 docker build --tag spetushkou/getting-started:0.1.0 .
 ```
@@ -41,7 +41,7 @@ docker image tag getting-started spetushkou/getting-started:0.1.0
 ## Upload an image to a registry
 
 ```bash
-docker image push $image_name:$tag_name
+docker image push $image_name
 
 docker image push spetushkou/getting-started:0.1.0
 ```
@@ -49,7 +49,7 @@ docker image push spetushkou/getting-started:0.1.0
 ## Show the history of an image
 
 ```bash
-docker image history $image_name:$tag_name
+docker image history $image_name
 
 docker image history spetushkou/getting-started:0.1.0
 ```
@@ -57,17 +57,19 @@ docker image history spetushkou/getting-started:0.1.0
 ## Create and run a new container from an image
 
 ```bash
-docker container run --detach --publish $port_host:$port_container $image_name:$tag_name
-docker container run --interactive --tty $image_name:$tag_name $shell_command
+docker container run --name $container_name --detach --publish $port_host:$port_container $image_name
+docker container run --name $container_name --interactive --tty --rm $image_name $shell_command
 
-docker container run --detach --publish 3000:3000 spetushkou/getting-started:0.1.0
-docker container run --interactive --tty ubuntu ls --all
+docker container run --name getting-started  --detach --publish 3000:3000 spetushkou/getting-started:0.1.0
+docker container run --name getting-started --interactive --tty --rm ubuntu ls --all
 ```
 
+- `--name` Assign a name to the container.
 - `--detach` Run container in background and print container id, map port `$port_host` of the host to port `$port_container` in the container.
 - `--publish` Publish a container's port(s) to the host.
 - `--interactive` Keep STDIN open even if not attached.
 - `--tty` Allocate a pseudo-TTY (teletypewriter), create a terminal (CLI) session.
+- `--rm` Automatically remove the container when it exits.
 
 ## List containers
 
@@ -103,9 +105,11 @@ docker container rm dadae2e212c1
 ## Execute a command in a running container
 
 ```bash
-docker container exec $container_id $shell_command
+docker container exec $container_id $sh_command
+docker container exec --interactive --tty $container_id bash
 
 docker container exec 0ca97dcfcbf7 ls --all
+docker exec -it some-mysql bash
 ```
 
 ## Fetch the logs of a container
@@ -142,7 +146,7 @@ docker volume create todo-db
 ## Create and run a new container from an image using a volume
 
 ```bash
-docker container run --detach --publish $port_host:$port_container --volume $volume_name:$volume_location $image_name:$tag_name
+docker container run --detach --publish $port_host:$port_container --volume $volume_name:$volume_location $image_name
 
 docker container run --detach --publish 3000:3000 --volume todo-db:/etc/todos spetushkou/getting-started:0.1.0
 ```
@@ -163,7 +167,7 @@ With bind mounts, you control the exact mountpoint on the host. This approach pe
 
 ```bash
 cd app
-docker run --detach --publish 3000:3000 --workdir /app --volume ${PWD}:/app node:20-alpine sh -c "yarn install && yarn run dev"
+docker container run --detach --publish 3000:3000 --workdir /app --volume ${PWD}:/app node:20-alpine sh -c "yarn install && yarn run dev"
 ```
 
 - `workdir` Working directory inside the container.
