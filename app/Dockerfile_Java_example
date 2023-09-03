@@ -1,0 +1,11 @@
+# When you build Java-based applications, a JDK is needed to compile the source code to Java bytecode. 
+# That JDK isn't needed in production. You might be using tools like Maven or Gradle to help build the app. 
+# Those tools also aren't needed in your final image.
+
+FROM maven AS build
+WORKDIR /app
+COPY . .
+RUN mvn package
+
+FROM tomcat
+COPY --from=build /app/target/file.war /usr/local/tomcat/webapps
