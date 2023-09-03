@@ -118,3 +118,19 @@ docker exec --interactive --tty 8b100ba4521a mysql -p todos
 use todos;
 select * from todo_items;
 ```
+
+## Run the application stack
+
+Prerequisite: app/docker-compose.yml
+
+```bash
+docker-compose up --detach
+```
+
+## Remove the application stack
+
+Prerequisite: app/docker-compose.yml
+
+```bash
+docker-compose down
+```
