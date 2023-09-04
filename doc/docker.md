@@ -1,6 +1,8 @@
 # Docker
 
-<https://learn.microsoft.com/en-us/visualstudio/docker/tutorials/docker-tutorial>
+- [doc/docker-docker-tutorial.md](docker-docker-tutorial.md)
+
+## Prerequisite
 
 ```bash
 docker container run -d -p 80:80 docker/getting-started

@@ -1,6 +1,6 @@
 # Docker: Multi-container apps
 
-<https://learn.microsoft.com/en-us/visualstudio/docker/tutorials/docker-tutorial>
+- [doc/docker-docker-tutorial.md](docker-docker-tutorial.md)
 
 Using multiple containers allows you to dedicate containers for specialized tasks. Each container should do one thing and do it well.
 
