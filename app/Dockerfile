@@ -37,4 +37,4 @@ CMD ["node", "/app/src/index.js"]
 # Specifies the operation the container should run when it starts. 
 # In this example, it runs the newly built app. 
 # You specify the command you want to run and each of its arguments as a string array.
-# ENTRYPOINT ["npm", "run", "./src/index.js"]
+# ENTRYPOINT ["npm", "run", "/app/src/index.js"]
