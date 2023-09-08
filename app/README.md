@@ -1,6 +1,7 @@
 # How to start
 
-<https://learn.microsoft.com/en-us/visualstudio/docker/tutorials/docker-tutorial>
+-   <https://learn.microsoft.com/en-us/visualstudio/docker/tutorials/docker-tutorial>
+-   <https://github.com/docker/getting-started>
 
 ```bash
 docker build -t getting-started .

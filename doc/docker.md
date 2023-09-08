@@ -1,6 +1,7 @@
 # Docker
 
 - [doc/docker-docker-tutorial.md](docker-docker-tutorial.md)
+- [doc/docker-intro-to-docker-containers.md](docker-intro-to-docker-containers.md)
 
 ## Prerequisite
 
@@ -52,6 +53,19 @@ docker image push spetushkou/getting-started:0.1.0
 docker image history $image_name
 
 docker image history spetushkou/getting-started:0.1.0
+```
+
+## List images
+
+```bash
+docker image ls
+docker image ls --all
+```
+
+## Remove an image
+
+```bash
+docker image rm $image_name
 ```
 
 ## Create and run a new container from an image
