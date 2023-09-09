@@ -149,6 +149,16 @@ docker container exec -it mysql-instance bash
 docker container run -it getting-started sh
 ```
 
+## Export a container's filesystem as a tar archive
+
+```bash
+docker export $container_id > $archive_file.tar
+
+docker container create --name=tmp-getting-started getting-started
+docker container export tmp-getting-started > /Users/spetushkou/Projects/docker/getting-started.tar
+docker container rm tmp-getting-started
+```
+
 ## Fetch the logs of a container
 
 ```bash
