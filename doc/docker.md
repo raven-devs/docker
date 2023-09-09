@@ -1,12 +1,10 @@
 # Docker
 
-- [doc/docker-docker-tutorial.md](docker-docker-tutorial.md)
-- [doc/docker-intro-to-docker-containers.md](docker-intro-to-docker-containers.md)
-
 ## Prerequisite
 
 ```bash
-docker container run -d -p 80:80 docker/getting-started
+docker container run --detach --publish 80:80 docker/getting-started
+docker container run -dp 80:80 docker/getting-started
 ```
 
 ## Log in to a Docker registry or cloud backend
@@ -60,6 +58,7 @@ docker image history spetushkou/getting-started:0.1.0
 ```bash
 docker image ls
 docker image ls --all
+docker image ls -a
 ```
 
 ## Remove an image
@@ -72,17 +71,21 @@ docker image rm $image_name
 
 ```bash
 docker container run --name $container_name --detach --publish $port_host:$port_container $image_name
+docker container run --name $container_name -dp $port_host:$port_container $image_name
 docker container run --name $container_name --interactive --tty --rm $image_name $shell_command
+docker container run --name $container_name -it --rm $image_name $shell_command
 
 docker container run --name getting-started  --detach --publish 3000:3000 spetushkou/getting-started:0.1.0
+docker container run --name getting-started  -dp 3000:3000 spetushkou/getting-started:0.1.0
 docker container run --name getting-started --interactive --tty --rm ubuntu ls --all
+docker container run --name getting-started -it --rm ubuntu ls --all
 ```
 
 - `--name` Assign a name to the container.
-- `--detach` Run container in background and print container id, map port `$port_host` of the host to port `$port_container` in the container.
-- `--publish` Publish a container's port(s) to the host.
-- `--interactive` Keep STDIN open even if not attached.
-- `--tty` Allocate a pseudo-TTY (teletypewriter), create a terminal (CLI) session.
+- `-d`, `--detach` Run container in background and print container id, map port `$port_host` of the host to port `$port_container` in the container.
+- `-p`, `--publish` Publish a container's port(s) to the host.
+- `-i`, `--interactive` Keep STDIN open even if not attached.
+- `-t`, `--tty` Allocate a pseudo-TTY (teletypewriter), create a terminal (CLI) session.
 - `--rm` Automatically remove the container when it exits.
 
 ## List containers
@@ -90,6 +93,7 @@ docker container run --name getting-started --interactive --tty --rm ubuntu ls -
 ```bash
 docker container ls
 docker container ls --all
+docker container ls -a
 ```
 
 ## Restart a container
@@ -98,6 +102,14 @@ docker container ls --all
 docker container restart $container_id
 
 docker container restart dadae2e212c1
+```
+
+## Pause a container
+
+```bash
+docker container pause $container_id
+
+docker container pause dadae2e212c1
 ```
 
 ## Stop a container
@@ -121,9 +133,13 @@ docker container rm dadae2e212c1
 ```bash
 docker container exec $container_id $sh_command
 docker container exec --interactive --tty $container_id bash
+docker container exec -it $container_id bash
+docker container run --interactive --tty $container_id sh
+docker container run -it $container_id sh
 
 docker container exec 0ca97dcfcbf7 ls --all
-docker exec -it some-mysql bash
+docker container exec -it mysql-instance bash
+docker container run -it getting-started sh
 ```
 
 ## Fetch the logs of a container

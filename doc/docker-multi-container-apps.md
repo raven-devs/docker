@@ -1,7 +1,5 @@
 # Docker: Multi-container apps
 
-- [doc/docker-docker-tutorial.md](docker-docker-tutorial.md)
-
 Using multiple containers allows you to dedicate containers for specialized tasks. Each container should do one thing and do it well.
 
 Containers, by default, run in isolation. They don't know anything about other processes or containers on the same computer. To allow one container to talk to another, use networking.
