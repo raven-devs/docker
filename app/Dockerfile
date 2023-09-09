@@ -31,7 +31,6 @@ COPY . .
 # If the container is running a web app, it's common to EXPOSE port 80.
 # EXPOSE 80
 
-
 CMD ["node", "/app/src/index.js"]
 
 # Specifies the operation the container should run when it starts. 
