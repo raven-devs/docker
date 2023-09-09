@@ -8,7 +8,7 @@ You can persist the single file on the host. When you make it available to the n
 
 Docker maintains the physical location the volume on the disk. Refer to the name of the volume, and Docker provides the right data.
 
-## Create a volume
+### Create a volume
 
 ```bash
 docker volume create $volume_name
@@ -16,7 +16,7 @@ docker volume create $volume_name
 docker volume create todo-db
 ```
 
-## Create and run a new container from an image using a volume
+### Create and run a new container from an image using a volume
 
 ```bash
 docker container run --detach --publish $port_host:$port_container --volume $volume_name:$volume_location $image_name
@@ -26,7 +26,7 @@ docker container run --detach --publish 3000:3000 --volume todo-db:/etc/todos sp
 
 - `--volume` Bind mount a volume.
 
-## Inspect a volume
+### Inspect a volume
 
 ```bash
 docker volume inspect $volume_name
