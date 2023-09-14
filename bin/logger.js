@@ -16,9 +16,7 @@ class BaseLogger {
 
   get prefix() {
     let prefix = ``;
-    prefix = this.options.logDate
-      ? `${prefix}${new Date().toISOString()}${this.delimiter}`
-      : prefix;
+    prefix = this.options.logDate ? `${prefix}${new Date().toISOString()}${this.delimiter}` : prefix;
     prefix = this.options.logUser ? `${prefix}${process.env.USER}${this.delimiter}` : prefix;
     return prefix;
   }
