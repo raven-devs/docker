@@ -1,12 +1,5 @@
 # Docker
 
-## Prerequisite
-
-```bash
-docker container run --detach --publish 80:80 docker/getting-started
-docker container run -dp 80:80 docker/getting-started
-```
-
 ## Log in to a Docker registry or cloud backend
 
 ```bash
@@ -23,6 +16,7 @@ Prerequisites: Dockerfile file.
 
 ```bash
 docker build --tag $image_name .
+docker build -t $image_name .
 
 docker build --tag spetushkou/getting-started:0.1.0 .
 ```
@@ -173,3 +167,36 @@ docker logs --follow --timestamps --since "2023-09-03T09:00:00.000Z" --until "20
 - `--tail` Number of lines to show from the end of the logs.
 - `--since` Show logs since timestamp (e.g. "2013-01-02T13:23:37Z") or relative (e.g. "42m" for 42 minutes).
 - `--until` Show logs before a timestamp (e.g. "2013-01-02T13:23:37Z") or relative (e.g. "42m" for 42minutes).
+
+## Dockerfile
+
+### CMD and ENTRYPOINT
+
+Docker `ENTRYPOINT` and `CMD` can have two forms i.e, Shell & Exec form.
+
+For example:
+
+```bash
+<instruction> <command>  ---> shell form
+<instruction> ["executable", "parameter"]  ---> exec form
+
+CMD echo "Hello World" (shell form)
+CMD ["echo", "Hello World"] (exec form)
+ENTRYPOINT echo "Hello World" (shell form)
+ENTRYPOINT ["echo", "Hello World"] (exec form)
+```
+
+Both the commands are used to specify the programs/commands to execute while initializing a container from a docker image.
+CMD: Sets default parameters that can be overridden from the Docker command line interface (CLI) while running a docker container.
+ENTRYPOINT: Sets default parameters that cannot be overridden while executing Docker containers with CLI parameters.
+
+CMD commands are ignored by daemon when there are parameters stated within the docker run command while
+ENTRYPOINT instructions are not ignored but instead are appended as command line parameters by treating those as
+arguments of the command.
+
+## Security scanning an image
+
+```bash
+docker scan $image_name
+docker scan docker/getting-started
+```

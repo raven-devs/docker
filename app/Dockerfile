@@ -1,7 +1,6 @@
 # Each command in the Dockerfile becomes a new layer in the image. 
 # To minimize the number of layers, you can restructure your Dockerfile to support caching of dependencies. 
 # For Node-based applications, those dependencies are defined in the package.json file.
-
 # The approach is to copy only that file in first, install the dependencies, and then copy everything else. 
 # The process only recreates the yarn dependencies if there was a change to the package.json.
 
@@ -28,15 +27,13 @@ COPY package.json yarn.lock ./
 # Executes a command in the container. Arguments to the RUN command are command-line commands.
 RUN yarn install --production
 
+# .dockerignore files are an easy way to selectively copy only image relevant files.
+# at this step files escibed in the .dockerignore will be omitted from copying
 COPY . .
 
 # Creates a configuration in the new image that specifies which ports to open when the container runs. 
 # If the container is running a web app, it's common to expose port 80.
 # EXPOSE 80
 
+# The CMD directive specifies the default command to run when starting a container from this image.
 CMD ["node", "/app/src/index.js"]
-
-# Specifies the operation the container should run when it starts. 
-# In this example, it runs the newly built app. 
-# You specify the command you want to run and each of its arguments as a string array.
-# ENTRYPOINT ["npm", "run", "/app/src/index.js"]
