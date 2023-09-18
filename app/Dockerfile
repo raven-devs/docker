@@ -11,7 +11,10 @@
 #  => CACHED [4/5] RUN yarn install --production
 
 # Downloads the specified image and creates a new container based on this image.
-FROM node:20-alpine 
+FROM node:20-alpine
+
+# install required packages
+RUN apk add --no-cache python3 g++ make
 
 # Sets the current working directory in the container, used by the subsequent commands.
 WORKDIR /app
@@ -28,7 +31,7 @@ RUN yarn install --production
 COPY . .
 
 # Creates a configuration in the new image that specifies which ports to open when the container runs. 
-# If the container is running a web app, it's common to EXPOSE port 80.
+# If the container is running a web app, it's common to expose port 80.
 # EXPOSE 80
 
 CMD ["node", "/app/src/index.js"]
