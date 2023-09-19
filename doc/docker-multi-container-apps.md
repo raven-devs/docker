@@ -54,6 +54,7 @@ docker container ls
 
 ```bash
 docker exec --interactive --tty $container_id mysql -p
+docker exec -it $container_id mysql -p
 
 docker exec --interactive --tty 8b100ba4521a mysql -p
 ```
@@ -106,6 +107,7 @@ http://localhost:3000
 
 ```bash
 docker exec --interactive --tty $container_id mysql -p $db_name
+docker exec -it $container_id mysql -p $db_name
 
 docker exec --interactive --tty 8b100ba4521a mysql -p todos
 ```

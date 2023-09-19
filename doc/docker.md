@@ -119,6 +119,14 @@ docker container stop $container_id
 docker container stop dadae2e212c1
 ```
 
+## Kill a container
+
+```bash
+docker container kill $container_id
+
+docker container kill dadae2e212c1
+```
+
 ## Remove a container
 
 ```bash
@@ -133,13 +141,18 @@ If the image contains a shell, you can run an interactive shell container using 
 
 ```bash
 docker container exec $container_id $sh_command
-docker container exec --interactive --tty $container_id bash
+
+docker container exec --interactive --tty $container_id /bin/bash
+docker container exec -it $container_id /bin/bash
 docker container exec -it $container_id bash
-docker container run --interactive --tty $container_id sh
+
+docker container run --interactive --tty $container_id /bin/sh
+docker container run -it $container_id /bin/sh
 docker container run -it $container_id sh
 
 docker container exec 0ca97dcfcbf7 ls --all
-docker container exec -it mysql-instance bash
+docker container exec -it mysql-instance /bin/bash
+docker container run -it getting-started /bin/sh
 docker container run -it getting-started sh
 ```
 
@@ -168,13 +181,18 @@ docker logs --follow --timestamps --since "2023-09-03T09:00:00.000Z" --until "20
 - `--since` Show logs since timestamp (e.g. "2013-01-02T13:23:37Z") or relative (e.g. "42m" for 42 minutes).
 - `--until` Show logs before a timestamp (e.g. "2013-01-02T13:23:37Z") or relative (e.g. "42m" for 42minutes).
 
+## Install an app in a container
+
+```bash
+docker container exec -it $container_id /bin/bash
+sudo apt-get install curl
+```
+
 ## Dockerfile
 
 ### CMD and ENTRYPOINT
 
-Docker `ENTRYPOINT` and `CMD` can have two forms i.e, Shell & Exec form.
-
-For example:
+Docker `ENTRYPOINT` and `CMD` can have two forms: Shell and Exec form.
 
 ```bash
 <instruction> <command>  ---> shell form
@@ -194,9 +212,4 @@ CMD commands are ignored by daemon when there are parameters stated within the d
 ENTRYPOINT instructions are not ignored but instead are appended as command line parameters by treating those as
 arguments of the command.
 
-## Security scanning an image
-
-```bash
-docker scan $image_name
-docker scan docker/getting-started
-```
+See examples: ./app-dockerfile-cmd, ./app-dockerfile-entrypoint
