@@ -11,11 +11,15 @@
 # downloads the specified image and creates a new container based on this image.
 FROM node:20-alpine
 
-# install required packages
+# install required packages and clean a cache installation
 # RUN apk add --no-cache python3 g++ make
 
-# install required global packages
+# install required packages and clean a cache installation
 # RUN npm install typescript@5.0.4 -g
+
+# install required packages and clean a cache installation,
+# try to do everything in one RUN step to minimize docker layers
+# RUN apt-get update && apt-get install curl -y && apt-get clean
 
 # ARG is for setting environment variables which are used only during the docker build process
 # ARG BUILD_TIME=abc
@@ -25,6 +29,11 @@ FROM node:20-alpine
 
 # sets the current working directory in the container, used by the subsequent commands
 WORKDIR /app
+
+# default NodeJS images have 'node' user and 'node' group, but it has to be enabled, 
+# the best option is to use it before any NPM dependencies or code are added,
+# RUN chown node:node ./
+# USER node
 
 # copies files from the host computer to the container
 COPY package.json yarn.lock ./
@@ -36,7 +45,7 @@ RUN yarn install --production
 COPY . .
 
 # creates a configuration in the new image that specifies which ports to open when the container runs
-# EXPOSE 8080
+EXPOSE 3000
 
 # the CMD directive specifies the default command to run when starting a container from this image
 CMD ["node", "/app/src/index.js"]

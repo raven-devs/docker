@@ -161,9 +161,9 @@ docker container run -it getting-started sh
 ```bash
 docker export $container_id > $archive_file.tar
 
-docker container create --name=tmp-getting-started getting-started
-docker container export tmp-getting-started > /Users/spetushkou/Projects/docker/getting-started.tar
-docker container rm tmp-getting-started
+docker container create --name=tmp-container getting-started
+docker container export tmp-container > /Users/spetushkou/Projects/docker/getting-started.tar
+docker container rm tmp-container
 ```
 
 ## Fetch the logs of a container

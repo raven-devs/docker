@@ -1,7 +1,5 @@
 FROM node:18.16-slim
 
-ENV NODE_ENV=production
-
 WORKDIR /usr/src/app
 
 # copy package-lock.json and package.json files at first step to enable layers caching
@@ -20,11 +18,14 @@ COPY LICENSE ./
 COPY README.md ./
 
 # typescript compile and build
-# RUN npm run build
+RUN npm run build
+
+# env variables
+ENV NODE_ENV=production
 
 # install production dependencies only and remove unnecessary dependencies from the previous 'npm ci' step
-# RUN npm ci --omit=dev
+RUN npm ci --omit=dev
 
 EXPOSE 3000
 
-# CMD [ "node", "dist/module/express/express-app.js" ]
+CMD [ "node", "dist/module/express/express-app.js" ]
