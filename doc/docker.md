@@ -60,6 +60,12 @@ docker image ls --all
 docker image ls -a
 ```
 
+## Inspect an image
+
+```bash
+docker image rm $image_name
+```
+
 ## Remove an image
 
 ```bash
@@ -72,12 +78,19 @@ docker image rm $image_name
 docker container run --name $container_name --detach --publish $port_host:$port_container $image_name
 docker container run --name $container_name -dp $port_host:$port_container $image_name
 docker container run --name $container_name --interactive --tty --rm $image_name $shell_command
+docker container run --name $container_name --interactive --tty --rm --env "ENV_NAME=env_value" $image_name $shell_command
+docker container run --name $container_name --interactive --tty --rm --env ENV_NAME $image_name $shell_command # ENV_NAME value will be taken from host
+docker container run --name $container_name --interactive --tty --rm --env-file=.env_file $image_name $shell_command
 docker container run --name $container_name -it --rm $image_name $shell_command
+docker container run --name $container_name -it --rm -e "ENV_NAME=env_value" $image_name $shell_command
 
 docker container run --name getting-started  --detach --publish 3000:3000 spetushkou/getting-started:0.1.0
 docker container run --name getting-started  -dp 3000:3000 spetushkou/getting-started:0.1.0
 docker container run --name getting-started --interactive --tty --rm ubuntu ls --all
 docker container run --name getting-started -it --rm ubuntu ls --all
+docker container run -it --rm -e "NODE_ENV=development" ubuntu printenv
+docker container run -it --rm --env NODE_ENV ubuntu printenv
+docker container run -it --rm --env-file=.env ubuntu printenv
 ```
 
 - `--name` Assign a name to the container.
@@ -86,6 +99,8 @@ docker container run --name getting-started -it --rm ubuntu ls --all
 - `-i`, `--interactive` Keep STDIN open even if not attached.
 - `-t`, `--tty` Allocate a pseudo-TTY (teletypewriter), create a terminal (CLI) session.
 - `--rm` Automatically remove the container when it exits.
+- `-e`, `--env` Set environment variables. The host will override the value. If no value provided then a value will be provided by the host.
+- `--env-file` Read in a file of environment variables.
 
 ## List containers
 
@@ -213,3 +228,10 @@ ENTRYPOINT instructions are not ignored but instead are appended as command line
 arguments of the command.
 
 See examples: ./app-dockerfile-cmd, ./app-dockerfile-entrypoint
+
+## Inspect docker objects
+
+```bash
+docker inspect $image_id
+docker inspect $container_id
+```

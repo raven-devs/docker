@@ -2,29 +2,28 @@ FROM node:18.16-slim
 
 WORKDIR /usr/src/app
 
-# copy package-lock.json and package.json files at first step to enable layers caching
+# RUN chown node:node ./
+# USER node
+
 COPY package*.json ./
 
 # omit installing husky: remove the 'prepare' script in the package.json
-RUN npm pkg delete scripts.prepare
-
 # install dependencies including devDependencies, we need those for typescript compile and build
-RUN npm ci
+RUN npm pkg delete scripts.prepare && npm ci && npm cache clean --force
 
-COPY src/ ./src/
+COPY src ./src
 COPY tsconfig*.json ./
 COPY CHANGELOG.md ./
 COPY LICENSE ./
 COPY README.md ./
 
-# typescript compile and build
 RUN npm run build
 
-# env variables
-ENV NODE_ENV=production
+ARG NODE_ENV=production
+ENV NODE_ENV=$NODE_ENV
 
 # install production dependencies only and remove unnecessary dependencies from the previous 'npm ci' step
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev --omit=peer && npm cache clean --force
 
 EXPOSE 3000
 

@@ -11,13 +11,13 @@
 # downloads the specified image and creates a new container based on this image.
 FROM node:20-alpine
 
-# install required packages and clean a cache installation
+# install required packages and clean cache
 # RUN apk add --no-cache python3 g++ make
 
-# install required packages and clean a cache installation
-# RUN npm install typescript@5.0.4 -g
+# install required packages and clean cache
+# RUN npm install typescript@5.0.4 -g && npm cache clean --force
 
-# install required packages and clean a cache installation,
+# install required packages and clean cache,
 # try to do everything in one RUN step to minimize docker layers
 # RUN apt-get update && apt-get install curl -y && apt-get clean
 

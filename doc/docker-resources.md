@@ -7,6 +7,7 @@
 - <https://nodejs.org/en/docs/guides/nodejs-docker-webapp>
 - <https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md>
 - <https://www.cncf.io/>
+- <https://vsupalov.com/docker-arg-env-variable-guide/>
 
 - Docker getting started
 

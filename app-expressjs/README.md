@@ -3,8 +3,10 @@
 ## Build an image and run a container
 
 ```bash
-docker build . -t spetushkou/app-expressjs
-docker run -dp 3000:3000 spetushkou/app-expressjs
+docker build . -t spetushkou/app-expressjs --build-arg NODE_ENV=production
+docker run -dp 3000:3000 --rm spetushkou/app-expressjs
+
+docker-compose up
 ```
 
 ## Test a container
@@ -23,4 +25,6 @@ curl --head localhost:3000
 $ docker kill $container_id
 curl --head localhost:3000
 # curl: (7) Failed to connect to localhost port 3000 after 6 ms: Couldn't connect to server
+
+docker-compose down
 ```
