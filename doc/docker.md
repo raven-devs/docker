@@ -4,24 +4,30 @@
 
 ```bash
 docker login --username $user_name
+docker login -u $user_name
 
 docker login --username spetushkou
 ```
 
-- `--username` User name.
+- `-u, --username` User name.
 
 ## Start a build (create an image)
 
 Prerequisites: Dockerfile file.
 
 ```bash
-docker build --tag $image_name .
-docker build -t $image_name .
+docker build . --tag $image_name
+docker build . -t $image_name
+docker build . -t $image_name --build-arg="ARG_NAME=arg_value" --progress=plain --no-cache
 
-docker build --tag spetushkou/getting-started:0.1.0 .
+docker build . --tag spetushkou/getting-started:0.1.0 .
+docker build . -t spetushkou/app-expressjs --build-arg="NODE_ENV=production" --progress=plain --no-cache
 ```
 
-- `--tag`: Name and optionally a tag (format: "name:tag").
+- `-t --tag` Name and optionally a tag (format: "name:tag").
+- `--progress` Set type of progress output ("auto", "plain", "tty"). Use plain to show container output (default "auto").
+- `--no-cache` Do not use cache when building the image. Cached containers do not show any output.
+- `--build-arg` Set build-time variables.
 
 ## Create a tag that refers to a source image
 
@@ -60,6 +66,8 @@ docker image ls --all
 docker image ls -a
 ```
 
+`-a, --all` Show all images.
+
 ## Inspect an image
 
 ```bash
@@ -76,30 +84,30 @@ docker image rm $image_name
 
 ```bash
 docker container run --name $container_name --detach --publish $port_host:$port_container $image_name
-docker container run --name $container_name -dp $port_host:$port_container $image_name
+docker container run --name $container_name -d -p $port_host:$port_container $image_name
 docker container run --name $container_name --interactive --tty --rm $image_name $shell_command
 docker container run --name $container_name --interactive --tty --rm --env "ENV_NAME=env_value" $image_name $shell_command
 docker container run --name $container_name --interactive --tty --rm --env ENV_NAME $image_name $shell_command # ENV_NAME value will be taken from host
 docker container run --name $container_name --interactive --tty --rm --env-file=.env_file $image_name $shell_command
-docker container run --name $container_name -it --rm $image_name $shell_command
-docker container run --name $container_name -it --rm -e "ENV_NAME=env_value" $image_name $shell_command
+docker container run --name $container_name -i -t --rm $image_name $shell_command
+docker container run --name $container_name -i -t --rm -e "ENV_NAME=env_value" $image_name $shell_command
 
-docker container run --name getting-started  --detach --publish 3000:3000 spetushkou/getting-started:0.1.0
-docker container run --name getting-started  -dp 3000:3000 spetushkou/getting-started:0.1.0
+docker container run --name getting-started --detach --publish 3000:3000 spetushkou/getting-started:0.1.0
+docker container run --name getting-started -d -p 3000:3000 spetushkou/getting-started:0.1.0
 docker container run --name getting-started --interactive --tty --rm ubuntu ls --all
-docker container run --name getting-started -it --rm ubuntu ls --all
-docker container run -it --rm -e "NODE_ENV=development" ubuntu printenv
-docker container run -it --rm --env NODE_ENV ubuntu printenv
-docker container run -it --rm --env-file=.env ubuntu printenv
+docker container run --name getting-started -i -t --rm ubuntu ls --all
+docker container run -i -t --rm -e "NODE_ENV=development" ubuntu printenv
+docker container run -i -t --rm --env NODE_ENV ubuntu printenv
+docker container run -i -t --rm --env-file=.env ubuntu printenv
 ```
 
 - `--name` Assign a name to the container.
-- `-d`, `--detach` Run container in background and print container id, map port `$port_host` of the host to port `$port_container` in the container.
-- `-p`, `--publish` Publish a container's port(s) to the host.
-- `-i`, `--interactive` Keep STDIN open even if not attached.
-- `-t`, `--tty` Allocate a pseudo-TTY (teletypewriter), create a terminal (CLI) session.
+- `-d, --detach` Run container in background and print container id, map port `$port_host` of the host to port `$port_container` in the container.
+- `-p, --publish` Publish a container's port(s) to the host.
+- `-i, --interactive` Keep STDIN open even if not attached.
+- `-t, --tty` Allocate a pseudo-TTY (teletypewriter), create a terminal (CLI) session.
 - `--rm` Automatically remove the container when it exits.
-- `-e`, `--env` Set environment variables. The host will override the value. If no value provided then a value will be provided by the host.
+- `-e, --env` Set environment variables. The host will override the value. If no value provided then a value will be provided by the host.
 - `--env-file` Read in a file of environment variables.
 
 ## List containers
@@ -109,6 +117,8 @@ docker container ls
 docker container ls --all
 docker container ls -a
 ```
+
+`-a, --all` Show all containers.
 
 ## Restart a container
 
@@ -158,17 +168,17 @@ If the image contains a shell, you can run an interactive shell container using 
 docker container exec $container_id $sh_command
 
 docker container exec --interactive --tty $container_id /bin/bash
-docker container exec -it $container_id /bin/bash
-docker container exec -it $container_id bash
+docker container exec -i -t $container_id /bin/bash
+docker container exec -i -t $container_id bash
 
 docker container run --interactive --tty $container_id /bin/sh
-docker container run -it $container_id /bin/sh
-docker container run -it $container_id sh
+docker container run -i -t $container_id /bin/sh
+docker container run -i -t $container_id sh
 
 docker container exec 0ca97dcfcbf7 ls --all
-docker container exec -it mysql-instance /bin/bash
-docker container run -it getting-started /bin/sh
-docker container run -it getting-started sh
+docker container exec -i -t mysql-instance /bin/bash
+docker container run -i -t getting-started /bin/sh
+docker container run -i -t getting-started sh
 ```
 
 ## Export a container's filesystem as a tar archive
@@ -199,8 +209,8 @@ docker logs --follow --timestamps --since "2023-09-03T09:00:00.000Z" --until "20
 ## Install an app in a container
 
 ```bash
-docker container exec -it $container_id /bin/bash
-sudo apt-get install curl
+docker container exec -i -t $container_id /bin/bash
+apt-get update && apt-get install curl -y && apt-get clean
 ```
 
 ## Dockerfile

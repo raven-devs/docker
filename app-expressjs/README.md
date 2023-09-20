@@ -3,7 +3,8 @@
 ## Build an image and run a container
 
 ```bash
-docker build . -t spetushkou/app-expressjs --build-arg NODE_ENV=production
+docker build . -t spetushkou/app-expressjs --build-arg="NODE_ENV=production"
+docker build . -t spetushkou/app-expressjs --build-arg="NODE_ENV=production" --progress=plain --no-cache # DEBUG
 docker run -dp 3000:3000 --rm spetushkou/app-expressjs
 
 docker-compose up

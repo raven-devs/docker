@@ -1,4 +1,4 @@
-# build stage: compile and build typescript app
+### intermediate: compile and build typescript app
 FROM node:18.16-slim as BUILDER
 
 WORKDIR /usr/src/app
@@ -13,8 +13,10 @@ COPY tsconfig*.json ./
 
 RUN npm run build
 
-# final build stage
-FROM node:18.16-slim
+### final: app
+FROM node:18.16-slim as APP
+
+# RUN echo DEBUG-1 whoami: $(whoami)
 
 ARG NODE_ENV=production
 ENV NODE_ENV=$NODE_ENV
@@ -23,6 +25,7 @@ ARG WORKDIR=/usr/src/app
 WORKDIR $WORKDIR
 
 RUN chown node:node ./
+
 USER node
 
 COPY package*.json ./
