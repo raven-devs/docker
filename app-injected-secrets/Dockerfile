@@ -1,8 +1,11 @@
 # docker build . -t my-fancy-image --build-arg PRIVATE_SSH_KEY=xxx
 # docker history my-fancy-image
-# >  31 seconds ago   RUN |1 PRIVATE_SSH_KEY=xxx /bin/sh -c mkdir …   21.8MB    buildkit.dockerfil
 
-FROM ruby:2.5.5-alpine
+# Use multi-stage builds to avoid leaking secrets inside your docker history.
+# The multi-stage build only retains the history of the final image. The builder history is ignored and thus your secret is safe.
+# Comapre to Dockerfile-bad
+
+FROM ruby:2.5.5-alpine AS builder
 
 # This is a secret
 ARG PRIVATE_SSH_KEY
@@ -15,5 +18,10 @@ RUN mkdir -p /root/.ssh/ && \
   echo "${PRIVATE_SSH_KEY}" > /root/.ssh/id_rsa && \
   bundle install && \
   rm /root/.ssh/id_rsa
+
+# The final image doesn't need the secret
+FROM ruby:2.5.5-alpine
+
+COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
 CMD ruby -e "puts 1 + 2"

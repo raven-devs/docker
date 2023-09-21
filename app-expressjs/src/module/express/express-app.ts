@@ -10,3 +10,12 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
+
+const gracefulShutdown = () => {
+  console.log('SIGTERM signal received!');
+  process.exit();
+};
+
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);
+process.on('SIGUSR2', gracefulShutdown); // Sent by nodemon

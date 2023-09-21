@@ -8,6 +8,7 @@
 - <https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md>
 - <https://www.cncf.io/>
 - <https://vsupalov.com/docker-arg-env-variable-guide/>
+- <https://www.padok.fr/en/blog/docker-processes-container>
 
 - Docker getting started
 

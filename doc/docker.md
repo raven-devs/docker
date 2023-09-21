@@ -231,3 +231,9 @@ docker container run -d -p 3000:3000 --workdir /app --volume ${PWD}:/app node:20
 docker inspect $image_id
 docker inspect $container_id
 ```
+
+## View summary of an image
+
+```bash
+docker scout quickview
+```
