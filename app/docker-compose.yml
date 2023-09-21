@@ -1,6 +1,6 @@
 # see: doc/docker-multi-container-apps
-version: '3.7'
 
+version: '3.7'
 services:
   app: # The name automatically becomes a network alias
     image: node:20-alpine

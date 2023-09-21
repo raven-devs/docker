@@ -84,18 +84,20 @@ docker image rm $image_name
 
 ```bash
 docker container run --name $container_name --detach --publish $port_host:$port_container $image_name
-docker container run --name $container_name -d -p $port_host:$port_container $image_name
-docker container run --name $container_name --interactive --tty --rm $image_name $shell_command
-docker container run --name $container_name --interactive --tty --rm --env "ENV_NAME=env_value" $image_name $shell_command
-docker container run --name $container_name --interactive --tty --rm --env ENV_NAME $image_name $shell_command # ENV_NAME value will be taken from host
-docker container run --name $container_name --interactive --tty --rm --env-file=.env_file $image_name $shell_command
-docker container run --name $container_name -i -t --rm $image_name $shell_command
-docker container run --name $container_name -i -t --rm -e "ENV_NAME=env_value" $image_name $shell_command
+docker container run -d -p $port_host:$port_container $image_name
+docker container run --interactive --tty --rm $image_name $shell_command
+docker container run --interactive --tty --rm --env "ENV_NAME=env_value" $image_name $shell_command
+docker container run --interactive --tty --rm --env ENV_NAME $image_name $shell_command # ENV_NAME value will be taken from host
+docker container run --interactive --tty --rm --env-file=.env_file $image_name $shell_command
+docker container run -i -t --rm $image_name $shell_command
+docker container run -i -t --rm -e "ENV_NAME=env_value" $image_name $shell_command
+docker container run -i -t --rm -e "ENV_NAME=env_value" $image_name $shell_command
+docker container run --rm -m "300M" --memory-swap "1G" $image_name
 
 docker container run --name getting-started --detach --publish 3000:3000 spetushkou/getting-started:0.1.0
-docker container run --name getting-started -d -p 3000:3000 spetushkou/getting-started:0.1.0
-docker container run --name getting-started --interactive --tty --rm ubuntu ls --all
-docker container run --name getting-started -i -t --rm ubuntu ls --all
+docker container run -d -p 3000:3000 spetushkou/getting-started:0.1.0
+docker container run --interactive --tty --rm ubuntu ls --all
+docker container run -i -t --rm ubuntu ls --all
 docker container run -i -t --rm -e "NODE_ENV=development" ubuntu printenv
 docker container run -i -t --rm --env NODE_ENV ubuntu printenv
 docker container run -i -t --rm --env-file=.env ubuntu printenv
@@ -109,6 +111,8 @@ docker container run -i -t --rm --env-file=.env ubuntu printenv
 - `--rm` Automatically remove the container when it exits.
 - `-e, --env` Set environment variables. The host will override the value. If no value provided then a value will be provided by the host.
 - `--env-file` Read in a file of environment variables.
+- `-m, --memory` Memory limit.
+- `--memory-swap` Swap limit equal to memory plus swap: '-1' to enable unlimited swap.
 
 ## List containers
 
@@ -213,31 +217,13 @@ docker container exec -i -t $container_id /bin/bash
 apt-get update && apt-get install curl -y && apt-get clean
 ```
 
-## Dockerfile
-
-### CMD and ENTRYPOINT
-
-Docker `ENTRYPOINT` and `CMD` can have two forms: Shell and Exec form.
+## Run a shell command in a container
 
 ```bash
-<instruction> <command>  ---> shell form
-<instruction> ["executable", "parameter"]  ---> exec form
+docker container run $container_id sh -c "$shell_command"
 
-CMD echo "Hello World" (shell form)
-CMD ["echo", "Hello World"] (exec form)
-ENTRYPOINT echo "Hello World" (shell form)
-ENTRYPOINT ["echo", "Hello World"] (exec form)
+docker container run -d -p 3000:3000 --workdir /app --volume ${PWD}:/app node:20-alpine sh -c "npm install && npm run dev"
 ```
-
-Both the commands are used to specify the programs/commands to execute while initializing a container from a docker image.
-CMD: Sets default parameters that can be overridden from the Docker command line interface (CLI) while running a docker container.
-ENTRYPOINT: Sets default parameters that cannot be overridden while executing Docker containers with CLI parameters.
-
-CMD commands are ignored by daemon when there are parameters stated within the docker run command while
-ENTRYPOINT instructions are not ignored but instead are appended as command line parameters by treating those as
-arguments of the command.
-
-See examples: ./app-dockerfile-cmd, ./app-dockerfile-entrypoint
 
 ## Inspect docker objects
 

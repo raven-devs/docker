@@ -1,10 +1,17 @@
-version: '3'
+# docker build . -t spetushkou/app-expressjs --build-arg="NODE_ENV=production"
+
+version: '3.7'
+name: 'container-app-expressjs'
 services:
-  'spetushkou-app-expressjs':
+  'server':
     build:
       context: ./
+      dockerfile: Dockerfile
       args:
-        - NODE_ENV=development
-    # env_file: .env
-    environment:
-      - NODE_ENV=development
+        - NODE_ENV=production
+    image: 'spetushkou/app-expressjs'
+    ports:
+      - 3000:3000
+networks:
+  default:
+    name: network-app-expressjs

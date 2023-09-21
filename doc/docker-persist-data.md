@@ -46,4 +46,4 @@ docker container run --detach --publish 3000:3000 --workdir /app --volume ${PWD}
 - `workdir` Working directory inside the container.
 - `--volume ${PWD}:/app` Bind mount the current directory from the host in the container into the `/app` directory.
 - `node:20-alpine` The image to use. This image is the base image for your app from the Dockerfile.
-- `sh -c "yarn install && yarn run dev"` A command. It starts a shell using `sh`.
+- `sh -c "yarn install && yarn run dev"` A shell command. It starts a shell using `sh`.
