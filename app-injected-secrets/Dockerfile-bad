@@ -1,0 +1,14 @@
+# The example produces two build steps that retain the injected secret. 
+# If anyone has access to your build history, they will be able to retrieve your secret.
+
+FROM ruby:2.5.5
+
+ARG PRIVATE_SSH_KEY
+
+# This build step will retain the private SSH key
+RUN echo "${PRIVATE_SSH_KEY}" > /root/.ssh/id_rsa
+
+# This build step will retain the private SSH key
+RUN bundle install
+
+RUN rm /root/.ssh/id_rsa
