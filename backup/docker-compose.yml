@@ -1,0 +1,19 @@
+# docker container run -d -p 3000:3000 -w /app -v ${PWD}:/app node:18.16-slim
+
+version: '3.7'
+name: 'docker-nodejs-dev-env'
+services:
+  dev-env:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    expose:
+      - '3000'
+    ports:
+      - '3000:3000'
+    working_dir: /usr/src/app
+    volumes:
+      - ./:/usr/src/app
+    image: 'spetushkou/docker-nodejs-dev-env'
+    environment:
+      - NODE_ENV=development

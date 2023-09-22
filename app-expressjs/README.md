@@ -20,10 +20,10 @@ apt-get update && apt-get install curl -y && apt-get clean
 curl --head localhost:3000
 ```
 
-## Kill a container
+## Stop a container
 
 ```bash
-$ docker kill $container_id
+$ docker stop $container_id
 curl --head localhost:3000
 # curl: (7) Failed to connect to localhost port 3000 after 6 ms: Couldn't connect to server
 
