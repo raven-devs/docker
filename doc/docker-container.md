@@ -1,84 +1,4 @@
-# Docker
-
-## Log in to a Docker registry or cloud backend
-
-```bash
-docker login --username $user_name
-docker login -u $user_name
-
-docker login --username spetushkou
-```
-
-- `-u, --username` User name.
-
-## Start a build (create an image)
-
-Prerequisites: Dockerfile file.
-
-```bash
-docker build . --tag $image_name
-docker build . -t $image_name
-docker build . -t $image_name --build-arg="ARG_NAME=arg_value" --progress=plain --no-cache
-
-docker build . --tag spetushkou/getting-started:0.1.0 .
-docker build . -t spetushkou/app-expressjs --build-arg="NODE_ENV=production" --progress=plain --no-cache
-```
-
-- `-t --tag` Name and optionally a tag (format: "name:tag").
-- `--progress` Set type of progress output ("auto", "plain", "tty"). Use plain to show container output (default "auto").
-- `--no-cache` Do not use cache when building the image. Cached containers do not show any output.
-- `--build-arg` Set build-time variables.
-
-## Create a tag that refers to a source image
-
-```bash
-docker image tag $image_name $image_name_with_tag
-
-docker image tag getting-started spetushkou/getting-started:0.1.0
-```
-
-## Upload an image to a registry
-
-```bash
-docker image push $image_name
-
-docker image push spetushkou/getting-started:0.1.0
-```
-
-## Show the history of an image
-
-How the image was built, meaning the steps in its Dockerfile.
-
-```bash
-docker image history --no-trunc $image_name
-
-docker image history spetushkou/getting-started:0.1.0
-docker image history --no-trunc spetushkou/getting-started:0.1.0 > image_history.log
-```
-
-`--no-trunc` Don't truncate output.
-
-## List images
-
-```bash
-docker image ls
-docker image ls --all
-docker image ls -a
-```
-
-`-a, --all` Show all images.
-
-## Inspect an image
-
-```bash
-docker image rm $image_name
-```
-
-## Remove an image
-
-```bash
-docker image rm $image_name
-```
+# Docker: Container
 
 ## Create and run a new container from an image
 
@@ -89,18 +9,18 @@ docker container run --interactive --tty --rm $image_name $shell_command
 docker container run --interactive --tty --rm --env "ENV_NAME=env_value" $image_name $shell_command
 docker container run --interactive --tty --rm --env ENV_NAME $image_name $shell_command # ENV_NAME value will be taken from host
 docker container run --interactive --tty --rm --env-file=.env_file $image_name $shell_command
-docker container run -i -t --rm $image_name $shell_command
-docker container run -i -t --rm -e "ENV_NAME=env_value" $image_name $shell_command
-docker container run -i -t --rm -e "ENV_NAME=env_value" $image_name $shell_command
+docker container run -it --rm $image_name $shell_command
+docker container run -it --rm -e "ENV_NAME=env_value" $image_name $shell_command
+docker container run -it --rm -e "ENV_NAME=env_value" $image_name $shell_command
 docker container run --rm -m "300M" --memory-swap "1G" $image_name
 
 docker container run --name getting-started --detach --publish 3000:3000 spetushkou/getting-started:0.1.0
 docker container run -d -p 3000:3000 spetushkou/getting-started:0.1.0
 docker container run --interactive --tty --rm ubuntu ls --all
-docker container run -i -t --rm ubuntu ls --all
-docker container run -i -t --rm -e "NODE_ENV=development" ubuntu printenv
-docker container run -i -t --rm --env NODE_ENV ubuntu printenv
-docker container run -i -t --rm --env-file=.env ubuntu printenv
+docker container run -it --rm ubuntu ls --all
+docker container run -it --rm -e "NODE_ENV=development" ubuntu printenv
+docker container run -it --rm --env NODE_ENV ubuntu printenv
+docker container run -it --rm --env-file=.env ubuntu printenv
 ```
 
 - `--init` Run an init inside the container.
@@ -165,7 +85,7 @@ docker container rm $container_id
 docker container rm dadae2e212c1
 ```
 
-## Remove all stoppped containers
+## Remove all stoppped containers (WARNING)
 
 ```bash
 docker container prune
@@ -175,22 +95,26 @@ docker container prune
 
 If the image contains a shell, you can run an interactive shell container using that image and explore whatever content that image has.
 If `sh` is not available, the busybox `ash` shell might be.
+When using "run" a temporary docker container is created and stopped (not terminated) after the command has finished running.
+"exec" needs a running container to take the command.
 
 ```bash
 docker container exec $container_id $sh_command
 
 docker container exec --interactive --tty $container_id /bin/bash
-docker container exec -i -t $container_id /bin/bash
-docker container exec -i -t $container_id bash
+docker container exec -it $container_id /bin/bash
+docker container exec -it $container_id bash
 
 docker container run --init --interactive --tty $container_id /bin/sh
-docker container run --init -i -t $container_id /bin/sh
-docker container run --init -i -t $container_id sh
+docker container run --init -it $container_id /bin/sh
+docker container run --init -it $container_id sh
+docker container run --init $container_id sh -c "$shell_command"
 
 docker container exec 0ca97dcfcbf7 ls --all
-docker container exec -i -t mysql-instance /bin/bash
-docker container run --init -i -t getting-started /bin/sh
-docker container run --init -i -t getting-started sh
+docker container exec -it mysql-instance /bin/bash
+docker container run --init -it getting-started /bin/sh
+docker container run --init -it getting-started sh
+docker container run --init -d -p 3000:3000 --workdir /app --volume ${PWD}:/app node:20-alpine sh -c "npm install && npm run dev"
 ```
 
 ## Export a container's filesystem as a tar archive
@@ -221,33 +145,6 @@ docker logs --follow --timestamps --since "2023-09-03T09:00:00.000Z" --until "20
 ## Install an app in a container
 
 ```bash
-docker container exec -i -t $container_id /bin/bash
+docker container exec -it $container_id /bin/bash
 apt-get update && apt-get install curl -y && apt-get clean
-```
-
-## Run a shell command in a container
-
-```bash
-docker container run --init $container_id sh -c "$shell_command"
-
-docker container run --init -d -p 3000:3000 --workdir /app --volume ${PWD}:/app node:20-alpine sh -c "npm install && npm run dev"
-```
-
-## Inspect docker objects
-
-```bash
-docker inspect $image_id
-docker inspect $container_id
-```
-
-## View summary of an image
-
-```bash
-docker scout quickview
-```
-
-## Lint Dockerfile
-
-```bash
-hadolint Dockerfile
 ```

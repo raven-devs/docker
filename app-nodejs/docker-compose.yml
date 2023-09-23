@@ -1,5 +1,5 @@
 version: '3.7'
-name: 'expressjs'
+name: 'nodejs'
 services:
   backend:
     build:
@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
       args:
         - NODE_ENV=production
-    image: 'spetushkou/expressjs'
+    image: 'spetushkou/nodejs'
     expose:
       - '3000'
     ports:

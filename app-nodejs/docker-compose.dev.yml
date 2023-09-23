@@ -1,5 +1,5 @@
 version: '3.7'
-name: 'expressjs-dev'
+name: 'nodejs-dev'
 services:
   backend:
     build:
@@ -9,8 +9,8 @@ services:
       - '3000'
     ports:
       - '3000:3000'
-    image: 'spetushkou/expressjs-dev'
-    container_name: 'expressjs-dev'
+    image: 'spetushkou/nodejs-dev'
+    container_name: 'nodejs-dev'
     working_dir: /usr/src/app
     volumes:
       - ./:/usr/src/app

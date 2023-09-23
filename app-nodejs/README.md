@@ -1,11 +1,11 @@
-# app-expressjs
+# app-nodejs
 
 ## Build an image and run a container
 
 ```bash
-docker build . -t spetushkou/app-expressjs --build-arg="NODE_ENV=production"
-docker build . -t spetushkou/app-expressjs --build-arg="NODE_ENV=production" --progress=plain --no-cache # DEBUG
-docker run --init -d -p 3000:3000 --rm spetushkou/app-expressjs
+docker build . -t spetushkou/app-nodejs --build-arg="NODE_ENV=production"
+docker build . -t spetushkou/app-nodejs --build-arg="NODE_ENV=production" --progress=plain --no-cache # DEBUG
+docker run --init -d -p 3000:3000 --rm spetushkou/app-nodejs
 
 or
 
