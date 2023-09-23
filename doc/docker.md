@@ -83,7 +83,7 @@ docker image rm $image_name
 ## Create and run a new container from an image
 
 ```bash
-docker container run --name $container_name --detach --publish $port_host:$port_container $image_name
+docker container run  --init --name $container_name --detach --publish $port_host:$port_container $image_name
 docker container run -d -p $port_host:$port_container $image_name
 docker container run --interactive --tty --rm $image_name $shell_command
 docker container run --interactive --tty --rm --env "ENV_NAME=env_value" $image_name $shell_command
@@ -103,6 +103,7 @@ docker container run -i -t --rm --env NODE_ENV ubuntu printenv
 docker container run -i -t --rm --env-file=.env ubuntu printenv
 ```
 
+- `--init` Run an init inside the container.
 - `--name` Assign a name to the container.
 - `-d, --detach` Run container in background and print container id, map port `$port_host` of the host to port `$port_container` in the container.
 - `-p, --publish` Publish a container's port(s) to the host.
@@ -172,7 +173,8 @@ docker container prune
 
 ## Execute a command in a running container
 
-If the image contains a shell, you can run an interactive shell container using that image and explore whatever content that image has. If `sh` is not available, the busybox `ash` shell might be.
+If the image contains a shell, you can run an interactive shell container using that image and explore whatever content that image has.
+If `sh` is not available, the busybox `ash` shell might be.
 
 ```bash
 docker container exec $container_id $sh_command
@@ -181,14 +183,14 @@ docker container exec --interactive --tty $container_id /bin/bash
 docker container exec -i -t $container_id /bin/bash
 docker container exec -i -t $container_id bash
 
-docker container run --interactive --tty $container_id /bin/sh
-docker container run -i -t $container_id /bin/sh
-docker container run -i -t $container_id sh
+docker container run --init --interactive --tty $container_id /bin/sh
+docker container run --init -i -t $container_id /bin/sh
+docker container run --init -i -t $container_id sh
 
 docker container exec 0ca97dcfcbf7 ls --all
 docker container exec -i -t mysql-instance /bin/bash
-docker container run -i -t getting-started /bin/sh
-docker container run -i -t getting-started sh
+docker container run --init -i -t getting-started /bin/sh
+docker container run --init -i -t getting-started sh
 ```
 
 ## Export a container's filesystem as a tar archive
@@ -226,9 +228,9 @@ apt-get update && apt-get install curl -y && apt-get clean
 ## Run a shell command in a container
 
 ```bash
-docker container run $container_id sh -c "$shell_command"
+docker container run --init $container_id sh -c "$shell_command"
 
-docker container run -d -p 3000:3000 --workdir /app --volume ${PWD}:/app node:20-alpine sh -c "npm install && npm run dev"
+docker container run --init -d -p 3000:3000 --workdir /app --volume ${PWD}:/app node:20-alpine sh -c "npm install && npm run dev"
 ```
 
 ## Inspect docker objects

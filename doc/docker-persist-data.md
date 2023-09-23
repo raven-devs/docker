@@ -19,9 +19,9 @@ docker volume create todo-db
 ### Create and run a new container from an image using a volume
 
 ```bash
-docker container run --detach --publish $port_host:$port_container --volume $volume_name:$volume_location $image_name
+docker container run --init --detach --publish $port_host:$port_container --volume $volume_name:$volume_location $image_name
 
-docker container run --detach --publish 3000:3000 --volume todo-db:/etc/todos spetushkou/getting-started:0.1.0
+docker container run --init --detach --publish 3000:3000 --volume todo-db:/etc/todos spetushkou/getting-started:0.1.0
 ```
 
 - `--volume` Bind mount a volume.
@@ -40,7 +40,7 @@ With bind mounts, you control the exact mountpoint on the host. This approach pe
 
 ```bash
 cd app
-docker container run --detach --publish 3000:3000 --workdir /app --volume ${PWD}:/app node:20-alpine sh -c "yarn install && yarn run dev"
+docker container run --init --detach --publish 3000:3000 --workdir /app --volume ${PWD}:/app node:20-alpine sh -c "yarn install && yarn run dev"
 ```
 
 - `workdir` Working directory inside the container.

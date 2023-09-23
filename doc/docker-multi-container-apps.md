@@ -22,6 +22,7 @@ docker network create todo-app
 
 ```bash
 docker container run \
+    --init \
     --network $network_name \
     --network-alias $network_alias \
     --platform $platform_id \
@@ -29,6 +30,7 @@ docker container run \
     $db_image_name
 
 docker container run \
+    --init \
     --detach \
     --network todo-app \
     --network-alias mysql \
@@ -84,6 +86,7 @@ The `todo` app supports the setting of environment variables to specify MySQL co
 
 ```bash
 docker container run \
+  --init \
   --detach \
   --publish 3000:3000 \
   --workdir /app \

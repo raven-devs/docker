@@ -13,6 +13,6 @@
 - Docker getting started
 
 ```bash
-docker container run -dp 80:80 docker/getting-started
+docker container run --init -dp 80:80 docker/getting-started
 localhost:80
 ```

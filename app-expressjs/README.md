@@ -5,7 +5,7 @@
 ```bash
 docker build . -t spetushkou/app-expressjs --build-arg="NODE_ENV=production"
 docker build . -t spetushkou/app-expressjs --build-arg="NODE_ENV=production" --progress=plain --no-cache # DEBUG
-docker run -d -p 3000:3000 --rm spetushkou/app-expressjs
+docker run --init -d -p 3000:3000 --rm spetushkou/app-expressjs
 
 or
 

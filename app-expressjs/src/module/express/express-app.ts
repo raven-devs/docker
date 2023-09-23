@@ -11,11 +11,11 @@ app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
 
-const gracefulShutdown = (signal: string) => {
+const onShutdown = (signal: string) => {
   console.log(`${signal} signal received, shutting down...`);
   process.exit();
 };
 
-process.on('SIGINT', () => gracefulShutdown('SIGINT'));
-process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
-process.on('SIGUSR2', () => gracefulShutdown('SIGUSR2')); // Sent by nodemon
+process.on('SIGINT', onShutdown);
+process.on('SIGTERM', onShutdown);
+process.on('SIGUSR2', onShutdown); // Sent by nodemon
