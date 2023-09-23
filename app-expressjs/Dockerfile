@@ -1,4 +1,4 @@
-# base
+# STAGE: BASE
 FROM node:18.16-slim as base
 
 WORKDIR /usr/src/app
@@ -13,8 +13,10 @@ COPY tsconfig*.json ./
 
 RUN npm run build
 
-# app
+# STAGE: APP
 FROM node:18.16-slim as app
+
+LABEL version="0.1.0" maintainer="Sergey Petushkou sergey.petushkou@ravendevs.com"
 
 # RUN echo DEBUG-1 whoami: $(whoami)
 
@@ -39,4 +41,5 @@ COPY --chown=node:node README.md ./
 COPY --chown=node:node --from=base $WORKDIR/dist dist
 
 EXPOSE 3000
+
 CMD ["node", "dist/module/express/express-app.js"]

@@ -164,6 +164,12 @@ docker container rm $container_id
 docker container rm dadae2e212c1
 ```
 
+## Remove all stoppped containers
+
+```bash
+docker container prune
+```
+
 ## Execute a command in a running container
 
 If the image contains a shell, you can run an interactive shell container using that image and explore whatever content that image has. If `sh` is not available, the busybox `ash` shell might be.
@@ -236,4 +242,10 @@ docker inspect $container_id
 
 ```bash
 docker scout quickview
+```
+
+## Lint Dockerfile
+
+```bash
+hadolint Dockerfile
 ```

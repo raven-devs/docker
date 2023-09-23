@@ -4,18 +4,18 @@ const PORT = 3000;
 const app = express();
 
 app.get('/', (req, res) => {
-  res.status(200).send('Hello World!');
+  res.status(200).send('Hi there!');
 });
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
 
-const gracefulShutdown = () => {
-  console.log('SIGTERM signal received!');
+const gracefulShutdown = (signal: string) => {
+  console.log(`${signal} signal received, shutting down...`);
   process.exit();
 };
 
-process.on('SIGINT', gracefulShutdown);
-process.on('SIGTERM', gracefulShutdown);
-process.on('SIGUSR2', gracefulShutdown); // Sent by nodemon
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGUSR2', () => gracefulShutdown('SIGUSR2')); // Sent by nodemon
