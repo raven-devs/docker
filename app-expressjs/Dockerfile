@@ -20,7 +20,7 @@ WORKDIR $WORKDIR
 RUN chown node:node ./
 USER node
 COPY --chown=node:node package*.json ./
-RUN npm ci --production && npm cache clean --force
+RUN npm ci --only=production && npm cache clean --force
 COPY --chown=node:node CHANGELOG.md ./
 COPY --chown=node:node LICENSE ./
 COPY --chown=node:node README.md ./

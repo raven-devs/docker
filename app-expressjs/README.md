@@ -39,3 +39,12 @@ docker-compose down
 docker-compose -f docker-compose.dev.yml up
 docker-compose down
 ```
+
+## Test image with a dockerignore file
+
+```bash
+docker build . -f Dockerfile-testignore -t dockerfile-testignore
+docker run --init -it dockerfile-testignore /bin/sh
+ls -a
+exit
+```
