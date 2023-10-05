@@ -1,0 +1,7 @@
+- docker for React
+- docker for MongoDB, PostgreSQL, Redis
+- examples from other projects
+- https://github.com/docker/awesome-compose/tree/master/official-documentation-samples
+- https://github.com/docker/awesome-compose/tree/master/react-express-mongodb
+- https://github.com/docker/awesome-compose/tree/master/react-express-mysql
+- Docker + AWS

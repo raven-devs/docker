@@ -3,6 +3,7 @@
 ## Build an image and run a container
 
 ```bash
+cd app-nodejs
 docker build . -t spetushkou/app-nodejs --build-arg="NODE_ENV=production"
 docker build . -t spetushkou/app-nodejs --build-arg="NODE_ENV=production" --progress=plain --no-cache # DEBUG
 docker run --init -d -p 3000:3000 --rm spetushkou/app-nodejs
@@ -33,7 +34,7 @@ or
 docker-compose down
 ```
 
-## Development Environment
+## Development environment (nodejs)
 
 ```bash
 docker-compose -f docker-compose.dev.yml up
