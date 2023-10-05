@@ -3,7 +3,7 @@ FROM node:18.16-slim as BUILD
 WORKDIR /usr/src/app
 RUN chown -R node:node ./ && chmod -R 770 ./
 USER node
-COPY --chown=node:node package*.json ./
+COPY --chown=node:node package*.json npm-shrinkwrap.json* ./
 RUN npm ci && npm cache clean --force
 COPY --chown=node:node src ./src
 COPY --chown=node:node tsconfig*.json ./
