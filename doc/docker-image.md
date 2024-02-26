@@ -9,7 +9,7 @@ docker build . --tag $image_name
 docker build . -t $image_name
 docker build . -t $image_name --build-arg="ARG_NAME=arg_value" --progress=plain --no-cache
 
-docker build . --tag spetushkou/getting-started:0.1.0 .
+docker build . --tag spetushkou/getting-started:0.1.0
 docker build . -t spetushkou/app-nodejs --build-arg="NODE_ENV=production" --progress=plain --no-cache
 ```
 
